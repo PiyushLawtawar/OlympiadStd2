@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import {
   Star, Trophy, Flame, Lock, Check, X, Home, Users, Sparkles,
   ChevronRight, ArrowLeft, Gem, Rocket, Crown, Clock, Target, Gift, RotateCcw
@@ -251,6 +251,45 @@ function initialProfile() {
   };
 }
 
+const APP_STATE_STORAGE_KEY = "brainquest_state";
+
+// resume: { worldIdx, tsId, isOlympiad, session } for an in-progress ThinkSheet, or null
+function loadAppState() {
+  try {
+    const raw = localStorage.getItem(APP_STATE_STORAGE_KEY);
+    if (!raw) return { profile: initialProfile(), resume: null };
+    const parsed = JSON.parse(raw);
+    return { profile: { ...initialProfile(), ...parsed.profile }, resume: parsed.resume || null };
+  } catch {
+    return { profile: initialProfile(), resume: null };
+  }
+}
+
+function saveAppState(state) {
+  try {
+    localStorage.setItem(APP_STATE_STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // storage unavailable (e.g. private browsing) — progress just won't persist
+  }
+}
+
+// Rehydrates a persisted `resume` pointer into the actual thinksheet + session, or null if it no longer resolves.
+function resolveResume(resume) {
+  if (!resume || !resume.session) return null;
+  const ts = resume.isOlympiad
+    ? OLYMPIAD_TEST
+    : WORLDS[resume.worldIdx]?.thinksheets.find((t) => t.id === resume.tsId);
+  if (!ts) return null;
+  return {
+    worldIdx: resume.worldIdx,
+    activeThinksheet: { worldIdx: resume.worldIdx, ts, isOlympiad: !!resume.isOlympiad },
+    session: resume.session,
+  };
+}
+
+const INITIAL_APP_STATE = typeof window !== "undefined" ? loadAppState() : { profile: initialProfile(), resume: null };
+const INITIAL_RESUME = resolveResume(INITIAL_APP_STATE.resume);
+
 /* ============================== UI PRIMITIVES ============================== */
 
 function StatChip({ icon, value, color, label }) {
@@ -317,12 +356,19 @@ function StarsRow({ count, size = 18 }) {
 /* ============================== MAIN APP ============================== */
 
 export default function App() {
-  const [view, setView] = useState("home"); // home | world | player | complete | parent | olympiadIntro
-  const [profile, setProfile] = useState(initialProfile());
-  const [activeWorldIdx, setActiveWorldIdx] = useState(0);
-  const [activeThinksheet, setActiveThinksheet] = useState(null); // { worldIdx, tsIdx, ts, isOlympiad }
-  const [session, setSession] = useState(null);
+  const [view, setView] = useState(INITIAL_RESUME ? "player" : "home"); // home | world | player | complete | parent | olympiadIntro
+  const [profile, setProfile] = useState(INITIAL_APP_STATE.profile);
+  const [activeWorldIdx, setActiveWorldIdx] = useState(INITIAL_RESUME ? INITIAL_RESUME.worldIdx : 0);
+  const [activeThinksheet, setActiveThinksheet] = useState(INITIAL_RESUME ? INITIAL_RESUME.activeThinksheet : null); // { worldIdx, tsIdx, ts, isOlympiad }
+  const [session, setSession] = useState(INITIAL_RESUME ? INITIAL_RESUME.session : null);
   const [lastResult, setLastResult] = useState(null);
+
+  useEffect(() => {
+    const resume = view === "player" && activeThinksheet && session
+      ? { worldIdx: activeThinksheet.worldIdx, tsId: activeThinksheet.ts.id, isOlympiad: !!activeThinksheet.isOlympiad, session }
+      : null;
+    saveAppState({ profile, resume });
+  }, [profile, view, activeThinksheet, session]);
 
   /* ---------- derived ---------- */
 
