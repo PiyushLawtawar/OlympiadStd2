@@ -217,6 +217,140 @@ const OLYMPIAD_TEST = {
   ],
 };
 
+// Original practice papers styled after each year's Olympiad patterns — not reproductions of any official test.
+const PAST_PAPERS = [
+  {
+    id: "pp2025", year: 2025, title: "2025 Practice Paper", difficulty: "Olympiad Challenge",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "2, 5, 14, 41, ?", options: ["100", "110", "122", "132"], correct: 2, explanation: "Each number is tripled and then 1 is subtracted: 2×3−1=5, 5×3−1=14, 14×3−1=41, so 41×3−1=122.", takeaway: "Test both multiplying and subtracting when a pattern grows very quickly.", skill: "Pattern Discovery" },
+      { prompt: "A shopkeeper had ₹200. He earned ₹85 from sales, spent ₹40 on supplies, and gave ₹25 to charity. How much money does he have now?", visual: "200 + 85 − 40 − 25 = ?", options: ["₹215", "₹220", "₹225", "₹230"], correct: 1, explanation: "200+85=285, 285−40=245, 245−25=220.", takeaway: "Work through several steps of money left to right, one operation at a time.", skill: "Multi-Step Reasoning" },
+      { prompt: "A garden has roses and tulips. Together they have 24 flowers. How many roses are there?", visual: null, options: ["8", "12", "16", "Cannot be determined"], correct: 3, explanation: "We only know the total (24), not how the flowers are split between roses and tulips — many combinations are possible.", takeaway: "Some problems are missing information on purpose — don't assume an even split.", skill: "Missing Information" },
+      { prompt: "In a code, each letter shifts forward by 2 and then the whole word is reversed. How is 'CAB' written?", visual: "C→E, A→C, B→D, then reverse", options: ["DCE", "ECD", "DEC", "CED"], correct: 0, explanation: "Shifting forward by 2 gives ECD. Reversing ECD letter by letter gives DCE.", takeaway: "When a code has two rules, apply them one at a time, in order.", skill: "Coding-Decoding" },
+      { prompt: "Look at 12, 18, 24, and 30. Which statement is true?", visual: null, options: ["All are multiples of only 2", "All are multiples of both 2 and 3", "All are multiples of 5", "All are prime numbers"], correct: 1, explanation: "Every number divides evenly by 2 and by 3 (e.g. 12÷3=4, 12÷2=6), so all are multiples of both.", takeaway: "A number can be a multiple of more than one number at the same time.", skill: "Which Statement Is True?" },
+      { prompt: "How many squares of any size can you find in a 3×3 grid of small squares?", visual: "▦▦▦ / ▦▦▦ / ▦▦▦", options: ["9", "12", "14", "16"], correct: 2, explanation: "There are 9 tiny 1×1 squares, 4 medium 2×2 squares, and 1 big 3×3 square: 9+4+1=14.", takeaway: "Don't stop at counting the smallest squares — look for bigger squares hiding inside the grid too.", skill: "Spatial Reasoning" },
+      { prompt: "In a race of four, Kabir finished first. Sam did not finish first. Sam finished right before Maya, and Maya finished right before Dev. Who finished 3rd?", visual: null, options: ["Sam", "Maya", "Dev", "Kabir"], correct: 1, explanation: "The order is Kabir, then Sam, then Maya, then Dev — so Maya finished 3rd.", takeaway: "Turn a chain of 'right before' clues into one ordered line, one clue at a time.", skill: "Logical Ordering" },
+      { prompt: "Which is greater: the sum of 15 and 12, or the product of 5 and 6?", visual: "15 + 12   vs   5 × 6", options: ["The sum (27)", "The product (30)", "They are equal", "Cannot tell"], correct: 1, explanation: "15+12=27 and 5×6=30. Since 30 is more than 27, the product is greater this time.", takeaway: "Never guess which operation wins — calculate both and compare.", skill: "Careful Reading" },
+    ],
+  },
+  {
+    id: "pp2024", year: 2024, title: "2024 Practice Paper", difficulty: "Olympiad Challenge",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "3, 7, 13, 21, 31, ?", options: ["39", "41", "43", "45"], correct: 2, explanation: "The gaps between numbers grow by 2 each time: +4, +6, +8, +10, so the next gap is +12: 31+12=43.", takeaway: "When the numbers themselves don't repeat, look at the pattern in the gaps between them.", skill: "Pattern Discovery" },
+      { prompt: "All squares are rectangles. Some rectangles are red. Is it definitely true that every square is red?", visual: null, options: ["Yes", "No", "Sometimes", "Cannot tell"], correct: 1, explanation: "Being a rectangle doesn't guarantee being red — only some rectangles are red, so we can't say every square is red.", takeaway: "Belonging to a group doesn't mean you have every property some members of that group have.", skill: "Logical Deduction" },
+      { prompt: "Priya spent ₹25 on a book and then had ₹40 left. How much money did she have at first?", visual: "? − 25 = 40", options: ["₹55", "₹60", "₹65", "₹70"], correct: 2, explanation: "Working backwards: if ₹40 is left after spending ₹25, she started with 40+25=₹65.", takeaway: "When a problem works backwards from the end, undo the last step with the opposite operation.", skill: "Multi-Step Reasoning" },
+      { prompt: "Which of these numbers is NOT a prime number?", visual: "7, 9, 11, 13", options: ["7", "9", "11", "13"], correct: 1, explanation: "9 can be divided evenly by 3 (9=3×3), so it isn't prime. 7, 11, and 13 can only be divided evenly by 1 and themselves.", takeaway: "A prime number has exactly two factors: 1 and itself — check for a hidden third factor.", skill: "Number Theory" },
+      { prompt: "In a code, words are written backwards. How is 'STAR' written in this code?", visual: "STAR → ?", options: ["RATS", "STRA", "RAST", "TARS"], correct: 0, explanation: "Reversing the letters of STAR (S-T-A-R) gives R-A-T-S, which spells RATS.", takeaway: "To reverse a word, read its letters from the last one to the first.", skill: "Coding-Decoding" },
+      { prompt: "If you rotate the digit '6' by 180°, which digit does it look like?", visual: "6 → ?", options: ["6", "8", "9", "0"], correct: 2, explanation: "Turning a 6 upside down flips its loop and stem, turning it into a 9.", takeaway: "Rotating 180° flips a shape both up-down and left-right at the same time.", skill: "Rotations" },
+      { prompt: "In how many ways can you make 12 by adding two different single-digit numbers (1-9)?", visual: "3+9, 4+8, 5+7", options: ["2", "3", "4", "5"], correct: 1, explanation: "The pairs of different digits that add to 12 are 3+9, 4+8, and 5+7 — that's 3 ways (6+6 doesn't count since the digits must be different).", takeaway: "List possibilities in order and watch for rules like 'different numbers only'.", skill: "How Many Ways?" },
+      { prompt: "In a queue, Arjun is 5th from the front and 4th from the back. How many people are in the queue?", visual: null, options: ["7", "8", "9", "10"], correct: 1, explanation: "Arjun is counted once from each end, so: 5+4−1=8 people in total.", takeaway: "When someone is counted from both ends, subtract 1 so they aren't counted twice.", skill: "Logical Puzzles" },
+    ],
+  },
+  {
+    id: "pp2023", year: 2023, title: "2023 Practice Paper", difficulty: "Olympiad Challenge",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "1, 1, 2, 3, 5, ?", options: ["6", "7", "8", "9"], correct: 2, explanation: "Each number is the sum of the two numbers before it: 2+3=5, so the next is 3+5=8.", takeaway: "Some patterns depend on more than just the one number before them.", skill: "Number Patterns" },
+      { prompt: "What is 3 × (4 + 2)?", visual: "3 × (4 + 2) = ?", options: ["14", "18", "20", "24"], correct: 1, explanation: "Solve inside the brackets first: 4+2=6, then multiply: 3×6=18.", takeaway: "Always work out what's inside brackets before doing the operation outside them.", skill: "Order of Operations" },
+      { prompt: "A pet shop has some cats and parrots. Together they have 30 legs. How many cats are there?", visual: null, options: ["6", "10", "15", "Cannot be determined"], correct: 3, explanation: "Cats have 4 legs and parrots have 2, and many combinations can add up to 30 legs — there isn't enough information to know exactly how many cats there are.", takeaway: "Watch for problems that give a total but leave out the details needed to split it.", skill: "Missing Information" },
+      { prompt: "In a code, each letter shifts forward by 3 (A→D, B→E...). How is 'CAT' written in this code?", visual: "C→F, A→D, T→W", options: ["FDW", "FDV", "EDW", "FCW"], correct: 0, explanation: "Shifting each letter forward by 3: C→F, A→D, T→W, spelling FDW.", takeaway: "Apply the same shift to every letter, one at a time.", skill: "Coding-Decoding" },
+      { prompt: "A toy costs ₹80. During a sale, ₹15 is taken off the price. Meena pays with a ₹100 note. How much change does she get?", visual: "100 − (80 − 15) = ?", options: ["₹25", "₹30", "₹35", "₹40"], correct: 2, explanation: "The sale price is 80−15=₹65. Her change is 100−65=₹35.", takeaway: "Find the new price after a discount before working out the change.", skill: "Multi-Step Reasoning" },
+      { prompt: "How many triangles (▲) are in this row?", visual: "▲ ▲ ● ▲ ■ ▲ ▲", options: ["3", "4", "5", "6"], correct: 2, explanation: "Counting only the triangle shapes ▲ in the row gives 5 of them.", takeaway: "Go slowly and count just one shape type at a time when shapes are mixed together.", skill: "Embedded Figures" },
+      { prompt: "Which combination makes exactly ₹35?", visual: null, options: ["1×₹20 + 1×₹10", "2×₹10 + 1×₹5", "3×₹10 + 1×₹5", "1×₹20 + 1×₹5"], correct: 2, explanation: "3 coins of ₹10 plus 1 coin of ₹5: 10+10+10+5=₹35 exactly.", takeaway: "Check each option by adding it up fully before picking the answer.", skill: "Making Amounts" },
+      { prompt: "In a line of children, Tara is 4th from the left and 6th from the right. How many children are in the line?", visual: null, options: ["8", "9", "10", "11"], correct: 1, explanation: "Tara is counted once from each side, so: 4+6−1=9 children in total.", takeaway: "Subtract 1 whenever someone is counted from both ends of a line.", skill: "Logical Puzzles" },
+    ],
+  },
+  {
+    id: "pp2022", year: 2022, title: "2022 Practice Paper", difficulty: "Challenging",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "5, 9, 15, 23, ?", options: ["31", "32", "33", "35"], correct: 2, explanation: "The gaps grow by 2 each time: +4, +6, +8, so the next gap is +10: 23+10=33.", takeaway: "When a pattern speeds up, check whether the gap itself is following its own pattern.", skill: "Pattern Discovery" },
+      { prompt: "A shop had 45 balloons. It sold 18 in the morning and 12 in the afternoon, then received 20 more. How many balloons does it have now?", visual: "45 − 18 − 12 + 20 = ?", options: ["33", "35", "37", "40"], correct: 1, explanation: "45−18=27, 27−12=15, 15+20=35.", takeaway: "Handle a multi-step story problem one event at a time, in the order it happens.", skill: "Multi-Step Reasoning" },
+      { prompt: "If A=1, B=2, C=3, and so on, what is the sum of the letters in 'CAB'?", visual: "C=3, A=1, B=2", options: ["5", "6", "7", "8"], correct: 1, explanation: "C is 3, A is 1, and B is 2. 3+1+2=6.", takeaway: "Swap each letter for its number first, then add them like a normal sum.", skill: "Coding-Decoding" },
+      { prompt: "Look at 21, 24, 27, and 30. Which statement is NOT true?", visual: null, options: ["All are multiples of 3", "All are even", "All are greater than 20", "All are less than 31"], correct: 1, explanation: "21 and 27 are odd numbers, so \"all are even\" is false — even though the other three statements are true.", takeaway: "Test a statement against every number in the list; one exception makes it false.", skill: "Which Statement Is True?" },
+      { prompt: "How many lines of symmetry does a rectangle (that is not a square) have?", visual: "▭", options: ["1", "2", "3", "4"], correct: 1, explanation: "A rectangle can be folded in half two ways — straight down the middle vertically and horizontally — and still match.", takeaway: "A rectangle has fewer lines of symmetry than a square because its sides aren't all equal.", skill: "Symmetry" },
+      { prompt: "Estimate: 29 × 4 is closest to?", visual: "29 × 4 ≈ ?", options: ["100", "110", "120", "130"], correct: 2, explanation: "29 is close to 30, and 30×4=120, which is close to the exact answer.", takeaway: "Rounding one number to the nearest ten makes multiplication easy to estimate.", skill: "Estimation" },
+      { prompt: "Neha is taller than Sam. Sam is taller than Ali. Ali is taller than Tom. Who is the 2nd tallest?", visual: null, options: ["Neha", "Sam", "Ali", "Tom"], correct: 1, explanation: "The order from tallest to shortest is Neha, Sam, Ali, Tom — so Sam is 2nd tallest.", takeaway: "Line up every clue in order before picking out a specific position.", skill: "Logical Ordering" },
+      { prompt: "In how many ways can you make ₹50 using only ₹10 and ₹20 coins?", visual: "10a + 20b = 50", options: ["2", "3", "4", "5"], correct: 1, explanation: "The combinations are 5×₹10, 3×₹10 + 1×₹20, and 1×₹10 + 2×₹20 — that's 3 ways.", takeaway: "Try every number of the bigger coin first, then fill the rest with the smaller coin.", skill: "How Many Ways?" },
+    ],
+  },
+  {
+    id: "pp2021", year: 2021, title: "2021 Practice Paper", difficulty: "Challenging",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "1, 4, 9, 16, ?", options: ["20", "24", "25", "30"], correct: 2, explanation: "These are square numbers: 1×1, 2×2, 3×3, 4×4, so the next is 5×5=25.", takeaway: "A number multiplied by itself is called a square number — a common hidden pattern.", skill: "Number Patterns" },
+      { prompt: "All birds can lay eggs. A sparrow is a bird. Can a sparrow lay eggs?", visual: null, options: ["Yes", "No", "Maybe", "Cannot tell"], correct: 0, explanation: "Since every bird can lay eggs, and a sparrow is a bird, a sparrow can lay eggs too.", takeaway: "If a rule is true for a whole group, it's true for every member of it.", skill: "Logical Deduction" },
+      { prompt: "I am a 2-digit number. My tens digit is 6 and my ones digit is 2. What number am I?", visual: null, options: ["26", "62", "68", "82"], correct: 1, explanation: "The tens digit comes first, so 6 tens and 2 ones makes 62.", takeaway: "Read number clues in order: tens digit first, then ones digit.", skill: "Number Puzzles" },
+      { prompt: "Which shape doesn't belong?", visual: "⬛ ⬛ ⭕ ⬛", options: ["1st ⬛", "2nd ⬛", "3rd ⭕", "4th ⬛"], correct: 2, explanation: "Every shape in the row is a square except the 3rd one, which is a circle.", takeaway: "Find what most of the shapes have in common before spotting the exception.", skill: "Odd One Out" },
+      { prompt: "What is 6 + 4 × 2?", visual: "6 + 4 × 2 = ?", options: ["20", "14", "16", "12"], correct: 1, explanation: "Multiply before you add: 4×2=8, then 6+8=14.", takeaway: "Multiplication and division happen before addition and subtraction.", skill: "Order of Operations" },
+      { prompt: "Deepak buys 3 chocolates at ₹6 each. He pays with a ₹20 note. How much change does he get?", visual: "20 − (3 × 6) = ?", options: ["₹1", "₹2", "₹3", "₹4"], correct: 1, explanation: "3 chocolates cost 3×6=₹18. His change is 20−18=₹2.", takeaway: "Find the total cost first, then subtract it from the amount paid.", skill: "Multi-Step Reasoning" },
+      { prompt: "Fish is to Water as Bird is to ?", visual: null, options: ["Nest", "Air", "Tree", "Egg"], correct: 1, explanation: "A fish lives and moves in water, just as a bird lives and moves through air.", takeaway: "An analogy asks you to match the same kind of relationship between two pairs.", skill: "Analogies" },
+      { prompt: "In a race, Aisha finished before Rohan, Rohan finished before Kiran, and Kiran finished before Om. Who finished last?", visual: null, options: ["Aisha", "Rohan", "Kiran", "Om"], correct: 3, explanation: "The finishing order is Aisha, Rohan, Kiran, Om — so Om finished last.", takeaway: "Chain 'before' clues together into one ordered line to find an end position.", skill: "Logical Ordering" },
+    ],
+  },
+  {
+    id: "pp2020", year: 2020, title: "2020 Practice Paper", difficulty: "Challenging",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "10, 13, 11, 14, 12, ?", options: ["13", "14", "15", "16"], correct: 2, explanation: "The pattern alternates +3 then −2: 10→13(+3)→11(−2)→14(+3)→12(−2), so next is 12+3=15.", takeaway: "Some patterns swap between two different rules — check every other step.", skill: "Number Patterns" },
+      { prompt: "In a code, each letter shifts back by 1 (B→A, C→B...). How is 'BUS' written in this code?", visual: "B→A, U→T, S→R", options: ["ATR", "ATS", "BTR", "ATQ"], correct: 0, explanation: "Shifting each letter back by 1: B→A, U→T, S→R, spelling ATR.", takeaway: "A code can shift letters backward instead of forward — read the rule carefully.", skill: "Coding-Decoding" },
+      { prompt: "What is the value of the digit 7 in the number 872?", visual: null, options: ["7", "70", "700", "2"], correct: 1, explanation: "The 7 is in the tens place, so it stands for 7 tens, which is 70.", takeaway: "A digit's position tells you its real value, not just the digit itself.", skill: "Place Value" },
+      { prompt: "Simran has 20 candies. She eats 6 and shares half of what remains with her brother. How many candies does she have left?", visual: "20 − 6 = 14, then half of 14", options: ["6", "7", "8", "10"], correct: 1, explanation: "After eating 6, she has 20−6=14 left. Sharing half means she keeps 14÷2=7.", takeaway: "Finish the subtraction step completely before splitting what remains.", skill: "Multi-Step Reasoning" },
+      { prompt: "Look at 16, 20, 24, and 28. Which statement is true?", visual: null, options: ["All are odd", "All are multiples of 4", "All are multiples of 5", "All are prime"], correct: 1, explanation: "16÷4=4, 20÷4=5, 24÷4=6, 28÷4=7 — every number divides evenly by 4.", takeaway: "Try dividing every number by the same value to test a multiples rule.", skill: "Which Statement Is True?" },
+      { prompt: "In how many ways can you make 15 by adding two single-digit numbers (1-9)?", visual: "6+9, 7+8", options: ["1", "2", "3", "4"], correct: 1, explanation: "The pairs that add to 15 using single digits are 6+9 and 7+8 — that's 2 ways.", takeaway: "List the pairs in order, starting from the smallest number, so none get repeated.", skill: "How Many Ways?" },
+      { prompt: "Look at this list. Which animal is 3rd?", visual: "🐶 🐱 🐰 🐻", options: ["Dog 🐶", "Cat 🐱", "Rabbit 🐰", "Bear 🐻"], correct: 2, explanation: "Counting from the left, Dog is 1st, Cat is 2nd, and Rabbit is 3rd.", takeaway: "Count carefully from the start whenever a question asks for a position.", skill: "Sequence Memory" },
+      { prompt: "If you rotate the letter 'b' by 180°, which letter does it look like?", visual: "b → ?", options: ["d", "p", "q", "b"], correct: 2, explanation: "Turning 'b' upside down flips both the loop and the stem, turning it into 'q'.", takeaway: "Rotating 180° flips a shape both up-down and left-right at once.", skill: "Rotations" },
+    ],
+  },
+  {
+    id: "pp2019", year: 2019, title: "2019 Practice Paper", difficulty: "Medium+",
+    questions: [
+      { prompt: "What comes next in this doubling-and-adding pattern?", visual: "2, 5, 11, 23, ?", options: ["35", "41", "47", "53"], correct: 2, explanation: "Each number is doubled and then 1 is added: 2×2+1=5, 5×2+1=11, 11×2+1=23, so 23×2+1=47.", takeaway: "When a pattern grows fast, try doubling the number and then adjusting by a small amount.", skill: "Pattern Discovery" },
+      { prompt: "Aman buys a notebook for ₹18 and a pen for ₹7. He pays with a ₹50 note. How much change does he get?", visual: "50 − (18 + 7) = ?", options: ["₹15", "₹20", "₹25", "₹30"], correct: 2, explanation: "The notebook and pen together cost 18+7=₹25. His change is 50−25=₹25.", takeaway: "Add up the total cost first, then subtract it from the money paid.", skill: "Multi-Step Reasoning" },
+      { prompt: "Which of these numbers is NOT a multiple of 4?", visual: "8, 12, 16, 18", options: ["8", "12", "16", "18"], correct: 3, explanation: "8, 12, and 16 all divide evenly by 4, but 18÷4 leaves a remainder, so it isn't a multiple of 4.", takeaway: "Check each number by dividing it by 4 — no remainder means it's a multiple.", skill: "Multiples" },
+      { prompt: "Puppy is to Dog as Kitten is to ?", visual: null, options: ["Cat", "Cub", "Calf", "Chick"], correct: 0, explanation: "A puppy is a baby dog, just as a kitten is a baby cat.", takeaway: "An analogy asks you to match the same kind of relationship in a new pair.", skill: "Analogies" },
+      { prompt: "How many squares (⬛) are in this row?", visual: "⬛ 🔺 ⬛ ⭕ ⬛ 🔺", options: ["2", "3", "4", "5"], correct: 1, explanation: "Counting only the square shapes ⬛ in the row, there are 3 of them.", takeaway: "Count one shape type at a time so different shapes don't get mixed up.", skill: "Embedded Figures" },
+      { prompt: "Kabir is older than Zoya. Zoya is older than Arjun. Who is the youngest?", visual: null, options: ["Kabir", "Zoya", "Arjun", "Cannot tell"], correct: 2, explanation: "Kabir is older than Zoya, and Zoya is older than Arjun, so Arjun is the youngest of the three.", takeaway: "Line up age clues in order to compare people you can't see directly.", skill: "Logical Deduction" },
+      { prompt: "Estimate: 48 + 33 is closest to?", visual: "48 + 33 ≈ ?", options: ["70", "80", "90", "100"], correct: 1, explanation: "48 rounds to 50 and 33 rounds to 30. 50+30=80, close to the exact answer.", takeaway: "Round each number to the nearest ten before adding to estimate quickly.", skill: "Estimation" },
+      { prompt: "A clock shows half past 7. What time is it?", visual: "🕢", options: ["7:00", "7:15", "7:30", "7:45"], correct: 2, explanation: "\"Half past\" means 30 minutes after the hour, so half past 7 is 7:30.", takeaway: "\"Half past\" always means the minute hand is pointing at the 6, which is 30 minutes.", skill: "Reading Clocks" },
+    ],
+  },
+  {
+    id: "pp2018", year: 2018, title: "2018 Practice Paper", difficulty: "Medium+",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "2, 4, 7, 11, ?", options: ["14", "15", "16", "17"], correct: 2, explanation: "The gaps grow by 1 each time: +2, +3, +4, so the next gap is +5: 11+5=16.", takeaway: "When numbers speed up, look at how much the gap itself is growing.", skill: "Pattern Discovery" },
+      { prompt: "In a code, each letter shifts forward by 2 (A→C, B→D...). How is 'CAT' written in this code?", visual: "C→E, A→C, T→V", options: ["ECV", "EDV", "DCU", "ECU"], correct: 0, explanation: "Shifting each letter forward by 2: C→E, A→C, T→V, spelling ECV.", takeaway: "Move every letter forward by the same amount, one at a time.", skill: "Coding-Decoding" },
+      { prompt: "Which of these is not a vehicle?", visual: "🚗 🚌 🚲 🐎", options: ["Car 🚗", "Bus 🚌", "Bicycle 🚲", "Horse 🐎"], correct: 3, explanation: "A car, bus, and bicycle are all built to carry people from place to place. A horse is a living animal, not a built vehicle.", takeaway: "A vehicle is something people build for carrying people or goods.", skill: "Classification" },
+      { prompt: "What is half of 20?", visual: "20 ÷ 2 = ?", options: ["8", "10", "12", "15"], correct: 1, explanation: "Splitting 20 into two equal groups gives 10 in each group.", takeaway: "Finding half of a number is the same as dividing it by 2.", skill: "Halves & Doubles" },
+      { prompt: "Find the missing number.", visual: "5 × ? = 20", options: ["3", "4", "5", "6"], correct: 1, explanation: "5 times what equals 20? 5×4=20. You can check using division: 20÷5=4.", takeaway: "Turn a missing-number multiplication into a division check.", skill: "Missing Numbers" },
+      { prompt: "Which letter has a line of symmetry?", visual: "H   F   P   L", options: ["H", "F", "P", "L"], correct: 0, explanation: "Folding the letter H down the middle makes both halves match perfectly.", takeaway: "A shape is symmetric if folding it in half makes both sides match exactly.", skill: "Symmetry" },
+      { prompt: "A movie starts at 2:30 and ends at 3:15. How long is the movie?", visual: "2:30 → 3:15", options: ["30 minutes", "45 minutes", "1 hour", "1 hour 15 minutes"], correct: 1, explanation: "From 2:30 to 3:00 is 30 minutes, and from 3:00 to 3:15 is another 15 minutes: 30+15=45 minutes.", takeaway: "Break the time gap into easy chunks, like up to the next hour, then the rest.", skill: "Time Duration" },
+      { prompt: "Maya is taller than Neha. Neha is taller than Priya. Who is the tallest?", visual: null, options: ["Maya", "Neha", "Priya", "Cannot tell"], correct: 0, explanation: "Maya is taller than Neha, and Neha is taller than Priya, so Maya is the tallest of the three.", takeaway: "Chain height clues together to find who's tallest or shortest.", skill: "Logical Deduction" },
+    ],
+  },
+  {
+    id: "pp2017", year: 2017, title: "2017 Practice Paper", difficulty: "Easy+",
+    questions: [
+      { prompt: "Skip count by 4s. What comes next?", visual: "4, 8, 12, 16, ?", options: ["18", "20", "22", "24"], correct: 1, explanation: "Each number is 4 more than the last: 16+4=20.", takeaway: "Skip counting means adding the same number over and over.", skill: "Skip Counting" },
+      { prompt: "Bird is to Nest as Bee is to ?", visual: null, options: ["Web", "Hive", "Den", "Burrow"], correct: 1, explanation: "A bird lives in a nest, just as a bee lives in a hive.", takeaway: "An analogy matches the same kind of relationship between two pairs of things.", skill: "Analogies" },
+      { prompt: "How many corners does a cube have?", visual: "🧊", options: ["4", "6", "8", "12"], correct: 2, explanation: "A cube has 8 corners, where three edges meet at each one.", takeaway: "Counting a solid shape's corners, edges, and faces separately helps you describe it.", skill: "3D Objects" },
+      { prompt: "A clock shows 6 o'clock. What number does the hour hand point to?", visual: "🕕 = 6:00", options: ["3", "6", "9", "12"], correct: 1, explanation: "At 6 o'clock exactly, the short hour hand points straight at the 6.", takeaway: "The short hand on a clock always shows the hour.", skill: "Reading Clocks" },
+      { prompt: "Find the missing number.", visual: "? + 9 = 20", options: ["9", "10", "11", "12"], correct: 2, explanation: "20 minus 9 gives the missing number: 20−9=11. Check: 11+9=20.", takeaway: "Use subtraction to find a missing number in an addition puzzle.", skill: "Missing Numbers" },
+      { prompt: "Which of these numbers is odd?", visual: "14, 22, 37, 40", options: ["14", "22", "37", "40"], correct: 2, explanation: "37 ends in 7, and numbers ending in 1, 3, 5, 7, or 9 are always odd.", takeaway: "Check only the last digit to know if a number is odd or even.", skill: "Odd & Even Numbers" },
+      { prompt: "A, B, C, D, E, F... What letter comes 3 steps after C?", visual: null, options: ["D", "E", "F", "G"], correct: 2, explanation: "Starting at C: 1 step is D, 2 steps is E, 3 steps is F.", takeaway: "Count each step one at a time along the alphabet to avoid mistakes.", skill: "Sequence Memory" },
+      { prompt: "Rita had 12 stickers. She gave 4 to a friend and then got 6 more. How many stickers does she have now?", visual: "12 − 4 + 6 = ?", options: ["12", "14", "16", "18"], correct: 1, explanation: "First 12−4=8. Then 8+6=14 stickers.", takeaway: "Solve two-step problems one step at a time, in the order they happen.", skill: "Multi-Step Reasoning" },
+    ],
+  },
+  {
+    id: "pp2016", year: 2016, title: "2016 Practice Paper", difficulty: "Easy+",
+    questions: [
+      { prompt: "What comes next in the pattern?", visual: "3, 6, 9, 12, ?", options: ["13", "14", "15", "16"], correct: 2, explanation: "Each number increases by 3: 12+3=15.", takeaway: "Find the constant gap between numbers to continue a pattern.", skill: "Number Patterns" },
+      { prompt: "Which one does not belong with the others?", visual: "🌹 🌷 🌻 🧅", options: ["Rose 🌹", "Tulip 🌷", "Sunflower 🌻", "Onion 🧅"], correct: 3, explanation: "Rose, tulip, and sunflower are all flowers. An onion is a vegetable, so it doesn't belong.", takeaway: "Find what the group has in common before spotting the one that's different.", skill: "Classification" },
+      { prompt: "How many sides does a pentagon have?", visual: "⬠", options: ["4", "5", "6", "7"], correct: 1, explanation: "\"Penta\" means five, so a pentagon always has 5 sides.", takeaway: "A shape's name often hints at its number of sides.", skill: "Shape Recognition" },
+      { prompt: "What day comes 2 days after Wednesday?", visual: null, options: ["Thursday", "Friday", "Saturday", "Sunday"], correct: 1, explanation: "One day after Wednesday is Thursday, and two days after is Friday.", takeaway: "Count forward one day at a time to find a day that comes 'after'.", skill: "Days & Calendar" },
+      { prompt: "Which sign is missing?", visual: "8  ?  2  =  4", options: ["+", "−", "×", "÷"], correct: 3, explanation: "8 divided into groups of 2 gives 4 groups: 8÷2=4.", takeaway: "When a bigger number splits evenly into a smaller answer, think division.", skill: "Missing Operator" },
+      { prompt: "You have 3 coins worth ₹2 each. How much money do you have?", visual: "🪙🪙🪙", options: ["₹4", "₹5", "₹6", "₹8"], correct: 2, explanation: "3 coins of ₹2 each: 2+2+2=₹6.", takeaway: "Counting equal coins is the same as repeated addition.", skill: "Counting Money" },
+      { prompt: "Which number is smaller?", visual: "56   or   65", options: ["56", "65", "They are equal", "Cannot tell"], correct: 0, explanation: "56 has a 5 in the tens place while 65 has a 6 in the tens place. Fewer tens means a smaller number.", takeaway: "Compare the tens digit first when two numbers have the same number of digits.", skill: "Number Comparison" },
+      { prompt: "Ravi has 5 pencils. He buys 3 more and then gives away 2. How many pencils does he have now?", visual: "5 + 3 − 2 = ?", options: ["4", "5", "6", "8"], correct: 2, explanation: "First 5+3=8. Then 8−2=6 pencils.", takeaway: "Solve two-step problems one step at a time, in the order they happen.", skill: "Multi-Step Reasoning" },
+    ],
+  },
+];
+
 const DIFFICULTY_RANK = { "Easy": 1, "Easy+": 2, "Medium": 3, "Medium+": 4, "Challenging": 5, "Olympiad Challenge": 6 };
 
 /* ============================== HELPERS ============================== */
@@ -246,6 +380,7 @@ function initialProfile() {
     completed: {}, // tsId -> { accuracy, stars, difficulty, category, correct, total }
     olympiadDone: false,
     olympiadScore: null,
+    pastPapers: {}, // paperId -> { accuracy, stars, correct, total, year, completedAt }
     bestStreak: 0,
     badges: [],
   };
@@ -253,7 +388,7 @@ function initialProfile() {
 
 const APP_STATE_STORAGE_KEY = "brainquest_state";
 
-// resume: { worldIdx, tsId, isOlympiad, session } for an in-progress ThinkSheet, or null
+// resume: { worldIdx, tsId, isOlympiad, isPastPaper, session } for an in-progress ThinkSheet, or null
 function loadAppState() {
   try {
     const raw = localStorage.getItem(APP_STATE_STORAGE_KEY);
@@ -278,11 +413,13 @@ function resolveResume(resume) {
   if (!resume || !resume.session) return null;
   const ts = resume.isOlympiad
     ? OLYMPIAD_TEST
+    : resume.isPastPaper
+    ? PAST_PAPERS.find((p) => p.id === resume.tsId)
     : WORLDS[resume.worldIdx]?.thinksheets.find((t) => t.id === resume.tsId);
   if (!ts) return null;
   return {
     worldIdx: resume.worldIdx,
-    activeThinksheet: { worldIdx: resume.worldIdx, ts, isOlympiad: !!resume.isOlympiad },
+    activeThinksheet: { worldIdx: resume.worldIdx, ts, isOlympiad: !!resume.isOlympiad, isPastPaper: !!resume.isPastPaper },
     session: resume.session,
   };
 }
@@ -365,7 +502,10 @@ export default function App() {
 
   useEffect(() => {
     const resume = view === "player" && activeThinksheet && session
-      ? { worldIdx: activeThinksheet.worldIdx, tsId: activeThinksheet.ts.id, isOlympiad: !!activeThinksheet.isOlympiad, session }
+      ? {
+          worldIdx: activeThinksheet.worldIdx, tsId: activeThinksheet.ts.id,
+          isOlympiad: !!activeThinksheet.isOlympiad, isPastPaper: !!activeThinksheet.isPastPaper, session,
+        }
       : null;
     saveAppState({ profile, resume });
   }, [profile, view, activeThinksheet, session]);
@@ -441,8 +581,8 @@ export default function App() {
 
   /* ---------- actions ---------- */
 
-  function startThinksheet(worldIdx, ts, isOlympiad = false) {
-    setActiveThinksheet({ worldIdx, ts, isOlympiad });
+  function startThinksheet(worldIdx, ts, isOlympiad = false, isPastPaper = false) {
+    setActiveThinksheet({ worldIdx, ts, isOlympiad, isPastPaper });
     setSession({
       qIdx: 0,
       answers: [],
@@ -488,7 +628,7 @@ export default function App() {
   }
 
   function finishThinksheet() {
-    const { ts, worldIdx, isOlympiad } = activeThinksheet;
+    const { ts, worldIdx, isOlympiad, isPastPaper } = activeThinksheet;
     const total = ts.questions.length;
     const correct = session.correctCount;
     const accuracy = Math.round((correct / total) * 100);
@@ -501,7 +641,11 @@ export default function App() {
     setProfile((p) => {
       const newBadges = [...p.badges];
       const newCompleted = { ...p.completed };
-      if (!isOlympiad) {
+      const newPastPapers = { ...p.pastPapers };
+      if (isPastPaper) {
+        newPastPapers[ts.id] = { accuracy, stars, correct, total, year: ts.year };
+        if (Object.keys(newPastPapers).length === PAST_PAPERS.length && !newBadges.includes("timeCapsule")) newBadges.push("timeCapsule");
+      } else if (!isOlympiad) {
         newCompleted[ts.id] = {
           accuracy, stars, correct, total,
           difficulty: ts.difficulty,
@@ -515,19 +659,21 @@ export default function App() {
         }
       }
       if (session.bestStreakThisSession >= 5 && !newBadges.includes("streakStar")) newBadges.push("streakStar");
+      if (isOlympiad && accuracy >= 70 && !newBadges.includes("olympiadChampion")) newBadges.push("olympiadChampion");
 
       return {
         ...p,
         points: p.points + earnedPoints,
         completed: newCompleted,
+        pastPapers: newPastPapers,
         olympiadDone: isOlympiad ? true : p.olympiadDone,
         olympiadScore: isOlympiad ? { accuracy, correct, total, timeTakenSec } : p.olympiadScore,
         bestStreak: Math.max(p.bestStreak, session.bestStreakThisSession),
-        badges: isOlympiad && accuracy >= 70 && !newBadges.includes("olympiadChampion") ? [...newBadges, "olympiadChampion"] : newBadges,
+        badges: newBadges,
       };
     });
 
-    setLastResult({ ts, worldIdx, isOlympiad, accuracy, stars, correct, total, earnedPoints, timeTakenSec });
+    setLastResult({ ts, worldIdx, isOlympiad, isPastPaper, accuracy, stars, correct, total, earnedPoints, timeTakenSec });
     setView("complete");
   }
 
@@ -585,6 +731,12 @@ export default function App() {
         <CompleteView
           result={lastResult} setView={setView} startThinksheet={startThinksheet}
           worlds={WORLDS} activeWorldIdx={activeWorldIdx} profile={profile}
+        />
+      )}
+
+      {view === "pastPapers" && (
+        <PastPapersView
+          profile={profile} setView={setView} startThinksheet={startThinksheet}
         />
       )}
 
@@ -713,6 +865,12 @@ function HomeView({ profile, setView, activeWorldIdx, setActiveWorldIdx, isWorld
           emoji="🏆" color="#FFC53D" locked={!olympiadUnlocked}
           onClick={() => setView("olympiadIntro")}
         />
+        <BigCard
+          title="Past Papers Vault"
+          subtitle={`${PAST_PAPERS.length} yearly practice papers, ${PAST_PAPERS[PAST_PAPERS.length - 1].year}–${PAST_PAPERS[0].year}`}
+          emoji="📚" color="#4EA8DE"
+          onClick={() => setView("pastPapers")}
+        />
       </div>
     </div>
   );
@@ -762,14 +920,71 @@ function WorldView({ world, worldIdx, profile, isThinksheetUnlocked, startThinks
   );
 }
 
+/* ============================== PAST PAPERS ============================== */
+
+function PastPapersView({ profile, setView, startThinksheet }) {
+  const papersByYearDesc = [...PAST_PAPERS].sort((a, b) => b.year - a.year);
+  const doneCount = papersByYearDesc.filter((p) => profile.pastPapers[p.id]).length;
+
+  return (
+    <div style={{ maxWidth: 480, margin: "0 auto", paddingBottom: 40 }}>
+      <div style={{ padding: "20px 20px 10px" }}>
+        <button onClick={() => setView("home")} style={{
+          background: "rgba(255,255,255,0.14)", border: "none", borderRadius: 12, padding: "8px 10px", color: "#fff", cursor: "pointer",
+        }}>
+          <ArrowLeft size={16} />
+        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 16 }}>
+          <div style={{ width: 56, height: 56, borderRadius: 18, background: "#4EA8DE33", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>
+            📚
+          </div>
+          <div>
+            <div style={{ color: "#fff", fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 22 }}>Past Papers Vault</div>
+            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 13 }}>
+              Original practice papers styled after each year, sorted newest first
+            </div>
+          </div>
+        </div>
+        <div style={{ color: "rgba(255,255,255,0.55)", fontSize: 12, fontWeight: 700, marginTop: 12 }}>
+          {doneCount} / {papersByYearDesc.length} papers completed
+        </div>
+      </div>
+
+      <div style={{ background: "#F6F5FB", borderRadius: "28px 28px 0 0", marginTop: 16, padding: "22px 20px 30px", display: "flex", flexDirection: "column", gap: 12 }}>
+        {papersByYearDesc.map((paper) => {
+          const done = profile.pastPapers[paper.id];
+          return (
+            <BigCard
+              key={paper.id}
+              title={`${paper.year} · ${paper.title}`}
+              subtitle={`${paper.questions.length} questions · ${paper.difficulty}`}
+              emoji={done ? "✅" : "🗓️"}
+              color="#4EA8DE"
+              onClick={() => startThinksheet(-2, paper, false, true)}
+              footer={done ? <StarsRow count={done.stars} size={16} /> : null}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ============================== PLAYER ============================== */
 
 function PlayerView({ activeThinksheet, session, selectAnswer, nextQuestion, setView }) {
-  const { ts, isOlympiad } = activeThinksheet;
+  const { ts, isOlympiad, isPastPaper } = activeThinksheet;
   const q = ts.questions[session.qIdx];
   const total = ts.questions.length;
   const pct = Math.round(((session.qIdx) / total) * 100);
   const isCorrect = session.showFeedback && session.selected === q.correct;
+
+  const [elapsedSec, setElapsedSec] = useState(() => Math.floor((Date.now() - session.startedAt) / 1000));
+  useEffect(() => {
+    const id = setInterval(() => setElapsedSec(Math.floor((Date.now() - session.startedAt) / 1000)), 1000);
+    return () => clearInterval(id);
+  }, [session.startedAt]);
+  const timeStr = `${Math.floor(elapsedSec / 60)}:${String(elapsedSec % 60).padStart(2, "0")}`;
 
   return (
     <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
@@ -778,13 +993,18 @@ function PlayerView({ activeThinksheet, session, selectAnswer, nextQuestion, set
           <button onClick={() => setView("home")} style={{ background: "#EDEDF4", border: "none", borderRadius: 12, padding: "7px 9px", cursor: "pointer" }}>
             <X size={16} color="#6B6B85" />
           </button>
-          <div style={{ flex: 1 }}><ProgressBar pct={pct} color={isOlympiad ? "#FFC53D" : "#2EC4B6"} /></div>
+          <div style={{ flex: 1 }}><ProgressBar pct={pct} color={isOlympiad ? "#FFC53D" : isPastPaper ? "#4EA8DE" : "#2EC4B6"} /></div>
           <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#6B6B85", fontSize: 12, fontWeight: 700 }}>
             <Flame size={14} color="#FF6B6B" /> {session.streak}
           </div>
         </div>
-        <div style={{ marginTop: 8, fontSize: 12, fontWeight: 700, color: "#9B9BB5" }}>
-          {isOlympiad ? "🏆 " : ""}Question {session.qIdx + 1} of {total} &middot; {ts.difficulty}
+        <div style={{ marginTop: 8, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "#9B9BB5" }}>
+            {isOlympiad ? "🏆 " : isPastPaper ? "📚 " : ""}Question {session.qIdx + 1} of {total} &middot; {ts.difficulty}
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, fontWeight: 700, color: "#9B9BB5" }}>
+            <Clock size={13} color="#4EA8DE" /> {timeStr}
+          </div>
         </div>
       </div>
 
@@ -878,7 +1098,7 @@ function PlayerView({ activeThinksheet, session, selectAnswer, nextQuestion, set
 /* ============================== COMPLETE ============================== */
 
 function CompleteView({ result, setView, startThinksheet, worlds, activeWorldIdx, profile }) {
-  const { ts, worldIdx, isOlympiad, accuracy, stars, correct, total, earnedPoints, timeTakenSec } = result;
+  const { ts, worldIdx, isOlympiad, isPastPaper, accuracy, stars, correct, total, earnedPoints, timeTakenSec } = result;
   const mins = Math.floor(timeTakenSec / 60), secs = timeTakenSec % 60;
   const mistakes = total - correct;
   const skillsTouched = [...new Set(ts.questions.map((q) => q.skill))];
@@ -886,9 +1106,9 @@ function CompleteView({ result, setView, startThinksheet, worlds, activeWorldIdx
   return (
     <div style={{ maxWidth: 480, margin: "0 auto", minHeight: "100vh", display: "flex", flexDirection: "column", padding: "40px 20px" }}>
       <div className="pop" style={{ textAlign: "center" }}>
-        <div style={{ fontSize: 56 }}>{isOlympiad ? "🏆" : accuracy >= 90 ? "🌟" : accuracy >= 70 ? "🎉" : "💪"}</div>
+        <div style={{ fontSize: 56 }}>{isOlympiad ? "🏆" : isPastPaper ? "📚" : accuracy >= 90 ? "🌟" : accuracy >= 70 ? "🎉" : "💪"}</div>
         <div style={{ fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 24, color: "#1B1B3F", marginTop: 8 }}>
-          {isOlympiad ? "Olympiad Score!" : "ThinkSheet Complete!"}
+          {isOlympiad ? "Olympiad Score!" : isPastPaper ? "Practice Paper Complete!" : "ThinkSheet Complete!"}
         </div>
         <div style={{ color: "#6B6B85", fontSize: 14, marginTop: 2 }}>{ts.title}</div>
         <div style={{ display: "flex", justifyContent: "center", marginTop: 12 }}>
@@ -921,13 +1141,13 @@ function CompleteView({ result, setView, startThinksheet, worlds, activeWorldIdx
       <div style={{ flex: 1 }} />
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 24 }}>
-        <button onClick={() => setView("home")} style={{
+        <button onClick={() => setView(isPastPaper ? "pastPapers" : "home")} style={{
           background: "#1B1B3F", color: "#fff", border: "none", borderRadius: 16, padding: "15px 20px",
           fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 16, cursor: "pointer", boxShadow: "0 4px 0 #0f0f28",
         }}>
-          {isOlympiad ? "Back to Adventure" : "Continue Adventure"} <Rocket size={16} style={{ verticalAlign: -3, marginLeft: 6 }} />
+          {isPastPaper ? "Back to Past Papers" : isOlympiad ? "Back to Adventure" : "Continue Adventure"} <Rocket size={16} style={{ verticalAlign: -3, marginLeft: 6 }} />
         </button>
-        <button onClick={() => startThinksheet(worldIdx, ts, isOlympiad)} style={{
+        <button onClick={() => startThinksheet(worldIdx, ts, isOlympiad, isPastPaper)} style={{
           background: "#fff", color: "#1B1B3F", border: "2px solid #EDEDF4", borderRadius: 16, padding: "13px 20px",
           fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 14, cursor: "pointer", display: "flex",
           alignItems: "center", justifyContent: "center", gap: 6,
@@ -1016,6 +1236,7 @@ const BADGE_LABELS = {
   brainGalaxyMaster: { emoji: "🌌", label: "Brain Galaxy Master" },
   streakStar: { emoji: "🔥", label: "5-Streak Star" },
   olympiadChampion: { emoji: "👑", label: "Olympiad Champion" },
+  timeCapsule: { emoji: "📚", label: "Time Capsule Champion" },
 };
 
 function ParentView({ profile, completedCount, overallAccuracy, categoryStats, highestDifficulty, readinessPct, practiceTarget, setView, resetProgress }) {
@@ -1038,6 +1259,7 @@ function ParentView({ profile, completedCount, overallAccuracy, categoryStats, h
           <PStat label="Overall Accuracy" value={`${overallAccuracy}%`} />
           <PStat label="Highest Difficulty" value={highestDifficulty} />
           <PStat label="Best Streak" value={`${profile.bestStreak} correct`} />
+          <PStat label="Past Papers Done" value={`${Object.keys(profile.pastPapers).length} / ${PAST_PAPERS.length}`} />
         </div>
 
         <div style={{ background: "#fff", borderRadius: 18, padding: 18, marginTop: 16 }}>
