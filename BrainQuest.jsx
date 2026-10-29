@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import {
   Star, Trophy, Flame, Lock, Check, X, Home, Users, Sparkles,
-  ChevronRight, ArrowLeft, Gem, Rocket, Crown, Clock, Target, Gift, RotateCcw
+  ChevronRight, ArrowLeft, Gem, Rocket, Crown, Clock, Target, Gift, RotateCcw,
+  FileText, ExternalLink, Download
 } from "lucide-react";
 
 /* ============================== QUESTION BANK ============================== */
@@ -373,6 +374,54 @@ function starsForAccuracy(pct) {
   return 1;
 }
 
+/* ============================== PRACTICE WORKSHEETS ============================== */
+
+// PDFs under ./worksheets/<Topic>/ are bundled by Vite; each folder becomes a topic. No answers — print/solve only.
+const WORKSHEET_FILES = import.meta.glob("./worksheets/**/*.pdf", { eager: true, query: "?url", import: "default" });
+
+const WORKSHEET_TOPIC_META = {
+  "NumericalAbility": { name: "Numerical Ability", emoji: "🔢", color: "#FF9F45" },
+  "Analytical Thinking": { name: "Analytical Thinking", emoji: "🧩", color: "#9B5DE5" },
+  "Visual": { name: "Visual Thinking", emoji: "👀", color: "#2EC4B6" },
+  "Verbal": { name: "Verbal Reasoning", emoji: "🔤", color: "#4EA8DE" },
+  "Memory and Concentration": { name: "Memory & Concentration", emoji: "🧠", color: "#F72585" },
+};
+
+const WORKSHEET_TOPICS = (() => {
+  const byFolder = {};
+  for (const [path, url] of Object.entries(WORKSHEET_FILES)) {
+    const parts = path.split("/");
+    const folder = parts[parts.length - 2];
+    (byFolder[folder] ||= []).push({ id: path, url, file: parts[parts.length - 1] });
+  }
+  const order = Object.keys(WORKSHEET_TOPIC_META);
+  return Object.keys(byFolder)
+    .sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99) || a.localeCompare(b))
+    .map((folder) => {
+      const meta = WORKSHEET_TOPIC_META[folder] || { name: folder, emoji: "📝", color: "#4EA8DE" };
+      const sheets = byFolder[folder]
+        .sort((a, b) => a.file.localeCompare(b.file, undefined, { numeric: true }))
+        .map((s, i) => ({ ...s, title: `Practice Paper ${i + 1}` }));
+      return { id: folder, ...meta, sheets };
+    });
+})();
+
+const WORKSHEET_COUNT = WORKSHEET_TOPICS.reduce((n, t) => n + t.sheets.length, 0);
+
+function useIsWide(minWidth = 900) {
+  const query = `(min-width: ${minWidth}px)`;
+  const [wide, setWide] = useState(() => typeof window !== "undefined" && window.matchMedia(query).matches);
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = (e) => setWide(e.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, [query]);
+  return wide;
+}
+
+/* ============================== PERSISTENCE ============================== */
+
 function initialProfile() {
   return {
     name: "Explorer",
@@ -381,6 +430,7 @@ function initialProfile() {
     olympiadDone: false,
     olympiadScore: null,
     pastPapers: {}, // paperId -> { accuracy, stars, correct, total, year, completedAt }
+    worksheetsDone: {}, // worksheet path -> true
     bestStreak: 0,
     badges: [],
   };
@@ -493,7 +543,7 @@ function StarsRow({ count, size = 18 }) {
 /* ============================== MAIN APP ============================== */
 
 export default function App() {
-  const [view, setView] = useState(INITIAL_RESUME ? "player" : "home"); // home | world | player | complete | parent | olympiadIntro
+  const [view, setView] = useState(INITIAL_RESUME ? "player" : "home"); // home | world | player | complete | parent | olympiadIntro | pastPapers | worksheets
   const [profile, setProfile] = useState(INITIAL_APP_STATE.profile);
   const [activeWorldIdx, setActiveWorldIdx] = useState(INITIAL_RESUME ? INITIAL_RESUME.worldIdx : 0);
   const [activeThinksheet, setActiveThinksheet] = useState(INITIAL_RESUME ? INITIAL_RESUME.activeThinksheet : null); // { worldIdx, tsIdx, ts, isOlympiad }
@@ -740,6 +790,10 @@ export default function App() {
         />
       )}
 
+      {view === "worksheets" && (
+        <WorksheetsView profile={profile} setProfile={setProfile} setView={setView} />
+      )}
+
       {view === "olympiadIntro" && (
         <OlympiadIntroView
           unlocked={olympiadUnlocked} completedCount={completedCount} setView={setView}
@@ -871,6 +925,12 @@ function HomeView({ profile, setView, activeWorldIdx, setActiveWorldIdx, isWorld
           emoji="📚" color="#4EA8DE"
           onClick={() => setView("pastPapers")}
         />
+        <BigCard
+          title="Practice Papers"
+          subtitle={`${WORKSHEET_COUNT} printable worksheets across ${WORKSHEET_TOPICS.length} topics`}
+          emoji="📝" color="#2EC4B6"
+          onClick={() => setView("worksheets")}
+        />
       </div>
     </div>
   );
@@ -965,6 +1025,190 @@ function PastPapersView({ profile, setView, startThinksheet }) {
             />
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+/* ============================== PRACTICE WORKSHEETS VIEW ============================== */
+
+function WorksheetsView({ profile, setProfile, setView }) {
+  const isWide = useIsWide();
+  const [topicId, setTopicId] = useState(WORKSHEET_TOPICS[0]?.id);
+  const topic = WORKSHEET_TOPICS.find((t) => t.id === topicId) || WORKSHEET_TOPICS[0];
+  const [selectedId, setSelectedId] = useState(null);
+  const done = profile.worksheetsDone || {};
+  const selected = topic?.sheets.find((s) => s.id === selectedId) || topic?.sheets[0];
+
+  const toggleDone = (id) =>
+    setProfile((p) => {
+      const next = { ...(p.worksheetsDone || {}) };
+      if (next[id]) delete next[id]; else next[id] = true;
+      return { ...p, worksheetsDone: next };
+    });
+
+  const pickTopic = (id) => { setTopicId(id); setSelectedId(null); };
+
+  const header = (
+    <div style={{ padding: "20px 20px 10px" }}>
+      <button onClick={() => setView("home")} style={{
+        background: "rgba(255,255,255,0.14)", border: "none", borderRadius: 12, padding: "8px 10px", color: "#fff", cursor: "pointer",
+      }}>
+        <ArrowLeft size={16} />
+      </button>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 16 }}>
+        <div style={{ width: 56, height: 56, borderRadius: 18, background: "#2EC4B633", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>
+          📝
+        </div>
+        <div>
+          <div style={{ color: "#fff", fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 22 }}>Practice Papers</div>
+          <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 13 }}>
+            Print or solve on paper, then tick it off. No answers here — ask a grown-up to check!
+          </div>
+        </div>
+      </div>
+      <div style={{ color: "rgba(255,255,255,0.55)", fontSize: 12, fontWeight: 700, marginTop: 12 }}>
+        {Object.keys(done).filter((id) => WORKSHEET_FILES[id]).length} / {WORKSHEET_COUNT} worksheets done
+      </div>
+    </div>
+  );
+
+  if (!topic) {
+    return (
+      <div style={{ maxWidth: 480, margin: "0 auto" }}>
+        {header}
+        <div style={{ background: "#F6F5FB", borderRadius: "28px 28px 0 0", marginTop: 16, padding: 24 }}>
+          <EmptyNote text="No worksheets found yet." />
+        </div>
+      </div>
+    );
+  }
+
+  const topicTabs = (
+    <div style={{
+      display: "flex", gap: 8, flexDirection: isWide ? "column" : "row",
+      overflowX: isWide ? "visible" : "auto", paddingBottom: isWide ? 0 : 4,
+    }}>
+      {WORKSHEET_TOPICS.map((t) => {
+        const active = t.id === topic.id;
+        const doneCount = t.sheets.filter((s) => done[s.id]).length;
+        return (
+          <button key={t.id} onClick={() => pickTopic(t.id)} style={{
+            display: "flex", alignItems: "center", gap: 8, flexShrink: 0, textAlign: "left",
+            border: `2px solid ${active ? t.color : "transparent"}`, cursor: "pointer",
+            background: active ? t.color + "1F" : "#fff", borderRadius: 14, padding: isWide ? "10px 12px" : "8px 12px",
+            boxShadow: active ? "none" : "0 2px 0 rgba(27,27,63,0.06)",
+          }}>
+            <span style={{ fontSize: 18 }}>{t.emoji}</span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ display: "block", fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 14, color: "#1B1B3F", whiteSpace: "nowrap" }}>{t.name}</span>
+              <span style={{ display: "block", fontSize: 11, color: "#6B6B85" }}>{doneCount}/{t.sheets.length} done</span>
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const doneCheck = (s) => (
+    <button
+      onClick={(e) => { e.stopPropagation(); toggleDone(s.id); }}
+      title={done[s.id] ? "Mark as not done" : "Mark as done"}
+      style={{
+        width: 30, height: 30, borderRadius: 10, flexShrink: 0, cursor: "pointer",
+        border: done[s.id] ? "none" : "2px solid #D9D9E6",
+        background: done[s.id] ? "#2EC4B6" : "#fff",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}
+    >
+      {done[s.id] && <Check size={18} color="#fff" strokeWidth={3} />}
+    </button>
+  );
+
+  const iconLink = (href, icon, label, download) => (
+    <a href={href} target="_blank" rel="noopener noreferrer" download={download} title={label} style={{
+      display: "flex", alignItems: "center", gap: 6, textDecoration: "none", flexShrink: 0,
+      background: topic.color, color: "#fff", borderRadius: 10, padding: "7px 10px",
+      fontSize: 12.5, fontWeight: 800,
+    }}>
+      {icon}{label}
+    </a>
+  );
+
+  /* ---------- mobile: topic chips + list; PDFs open in the phone's own viewer ---------- */
+  if (!isWide) {
+    return (
+      <div style={{ maxWidth: 480, margin: "0 auto", paddingBottom: 40 }}>
+        {header}
+        <div style={{ background: "#F6F5FB", borderRadius: "28px 28px 0 0", marginTop: 16, padding: "18px 16px 30px" }}>
+          {topicTabs}
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 14 }}>
+            {topic.sheets.map((s) => (
+              <div key={s.id} style={{
+                display: "flex", alignItems: "center", gap: 12, background: "#fff", borderRadius: 18,
+                padding: "12px 14px", boxShadow: "0 4px 0 rgba(27,27,63,0.08)",
+              }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: 12, background: topic.color + "22", flexShrink: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <FileText size={20} color={topic.color} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0, fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 15, color: "#1B1B3F" }}>
+                  {s.title}
+                </div>
+                {iconLink(s.url, <ExternalLink size={14} />, "Open")}
+                {doneCheck(s)}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ---------- web: topics | worksheet list | embedded PDF viewer ---------- */
+  return (
+    <div style={{ maxWidth: 1280, margin: "0 auto", paddingBottom: 24 }}>
+      {header}
+      <div style={{
+        background: "#F6F5FB", borderRadius: 28, margin: "16px 20px 0", padding: 20,
+        display: "grid", gridTemplateColumns: "220px 240px 1fr", gap: 18, height: "calc(100vh - 210px)", minHeight: 520,
+      }}>
+        <div style={{ overflowY: "auto" }}>{topicTabs}</div>
+
+        <div style={{ overflowY: "auto", display: "flex", flexDirection: "column", gap: 8, paddingRight: 4 }}>
+          {topic.sheets.map((s) => {
+            const active = s.id === selected?.id;
+            return (
+              <div key={s.id} onClick={() => setSelectedId(s.id)} style={{
+                display: "flex", alignItems: "center", gap: 10, cursor: "pointer",
+                background: active ? topic.color + "1F" : "#fff", border: `2px solid ${active ? topic.color : "transparent"}`,
+                borderRadius: 14, padding: "10px 12px",
+              }}>
+                <FileText size={18} color={topic.color} />
+                <span style={{ flex: 1, fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 14, color: "#1B1B3F" }}>{s.title}</span>
+                {doneCheck(s)}
+              </div>
+            );
+          })}
+        </div>
+
+        {selected && (
+          <div style={{ display: "flex", flexDirection: "column", minWidth: 0, background: "#fff", borderRadius: 20, overflow: "hidden", boxShadow: "0 6px 24px rgba(27,27,63,0.08)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderBottom: "1px solid #EDEDF4" }}>
+              <span style={{ fontSize: 20 }}>{topic.emoji}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: "'Baloo 2', sans-serif", fontWeight: 700, fontSize: 16, color: "#1B1B3F" }}>{selected.title}</div>
+                <div style={{ fontSize: 12, color: "#6B6B85" }}>{topic.name}</div>
+              </div>
+              {iconLink(selected.url, <ExternalLink size={14} />, "Open")}
+              {iconLink(selected.url, <Download size={14} />, "Download", `${topic.name} - ${selected.title}.pdf`)}
+              {doneCheck(selected)}
+            </div>
+            <iframe key={selected.id} src={selected.url} title={selected.title} style={{ flex: 1, width: "100%", border: "none" }} />
+          </div>
+        )}
       </div>
     </div>
   );

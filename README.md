@@ -11,9 +11,10 @@ BrainQuest turns Olympiad-style practice (Numerical Ability, Patterns & Operatio
 - **Scoring** — points, streak bonuses, star ratings (1–3) per ThinkSheet based on accuracy, and badges (e.g. world-mastery badges, a 5-streak badge, an Olympiad Champion badge).
 - **Olympiad Arena** — a 10-question mock test that unlocks after 4 ThinkSheets are completed.
 - **Past Papers Vault** — a separate, always-unlocked section with 10 original practice papers styled after each year from 2016–2025 (sorted newest first), 8 questions each. Like ThinkSheets, every question reveals the correct answer and explanation immediately after you pick or submit an option, and each paper's score/stars is saved.
+- **Practice Papers** — printable PDF worksheets from the `worksheets/` folder, grouped by topic (one sub-folder per topic). They have no answer keys: kids open/print them, solve on paper, and tick each one off as done. On desktop the PDF is shown inline next to the topic and paper lists; on phones each paper opens in the device's PDF viewer.
 - **Parent Dashboard** — accuracy by category, strong/weak areas, highest difficulty reached, an "Olympiad readiness" percentage, past papers completed, and a progress reset option.
 
-All state (profile, points, completed ThinkSheets, badges) lives in React `useState` — there's no backend or persistence; progress resets on page reload.
+All state (profile, points, completed ThinkSheets, badges, worksheets marked done) is saved to `localStorage`, so progress survives a page reload on the same browser.
 
 ## Tech
 
@@ -21,24 +22,17 @@ All state (profile, points, completed ThinkSheets, badges) lives in React `useSt
 - [lucide-react](https://lucide.dev/) for icons
 - Inline styles (no CSS framework); fonts loaded from Google Fonts (`Baloo 2`, `Nunito`)
 
-The file currently has no surrounding project scaffold (no `package.json`), so it needs to be dropped into a React project to run.
-
 ## How to run
 
-1. Scaffold a React app (Vite is fastest):
-   ```bash
-   npm create vite@latest brainquest -- --template react
-   cd brainquest
-   npm install
-   npm install lucide-react
-   ```
-2. Replace the generated `src/App.jsx` with this repo's `BrainQuest.jsx` (or copy it in and update the import in `src/main.jsx` accordingly).
-3. Start the dev server:
-   ```bash
-   npm run dev
-   ```
-4. Open the printed local URL (typically `http://localhost:5173`) in a browser.
+```bash
+npm install
+npm run dev
+```
+
+Open the printed local URL (typically `http://localhost:5173`). `npm run build` produces a static site in `dist/`, with the worksheet PDFs bundled in.
 
 ## Editing content
 
 All questions live in the `WORLDS` array, `OLYMPIAD_TEST` object, and `PAST_PAPERS` array at the top of `BrainQuest.jsx`. Each question has `prompt`, optional `visual`, `options`, `correct` (index), `explanation`, `takeaway`, and `skill` fields — add or edit entries there to change the question bank. Each entry in `PAST_PAPERS` also has `id`, `year`, `title`, and `difficulty`; add a new object to extend the vault to another year.
+
+To add practice worksheets, drop PDFs into `worksheets/<Topic>/` — a new folder becomes a new topic automatically. Papers are ordered by filename, numbers in natural order (e.g. `worksheet (9).pdf` before `worksheet (12).pdf`), and shown as "Practice Paper 1, 2, …". Display names, emojis and colors for known folders are set in `WORKSHEET_TOPIC_META` in `BrainQuest.jsx`.
